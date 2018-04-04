@@ -7,10 +7,14 @@ message.pack()
 
 client = StringVar()
 inputs = Entry(window, text=client)
+
 inputs.pack(side=BOTTOM, fill=X)
 
+
 def press_enter(event):
-	get_inputs = inputs.get()
+	toBinary = (' '.join(format(ord(x), 'b') for x in inputs.get()))
+
+	get_inputs = '0'+toBinary
 	print(get_inputs)
 	message.insert(INSERT, '%s\n' % get_inputs)
 	client.set('')
