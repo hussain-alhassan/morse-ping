@@ -24,4 +24,4 @@ frame = Frame(window)
 inputs.bind("<Return>", press_enter)
 frame.pack
 
-window.mainloop()
+window.mainloop()	

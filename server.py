@@ -1,7 +1,12 @@
 import socket
 
+<<<<<<< HEAD
 #UDP_IP = "10.18.99.162"
 UDP_IP = "127.0.0.1"
+=======
+#UDP_IP = "127.0.0.1"
+UDP_IP = "10.18.99.162"
+>>>>>>> 35e4987c1daff437e356f612be1ec5f1207b6b18
 UDP_PORT = 5005
  
 sock = socket.socket(socket.AF_INET, # Internet
