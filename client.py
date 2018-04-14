@@ -2,8 +2,9 @@ import time
 import socket
 
 
-UDP_IP = "10.18.99.162"
-#UDP_IP = "127.0.0.1"
+#UDP_IP = "10.18.99.162"
+UDP_IP = "127.0.0.1"
+
 UDP_PORT = 5005
 MESSAGE = "packet 1"
 MESSAGE3 = "packet 2"
@@ -24,21 +25,4 @@ for i in MESSAGE2:
 			time.sleep(1)
 			sock.sendto(MESSAGE3, (UDP_IP, UDP_PORT))
 		time.sleep(3)
-
-
-
-
-
-'''
-for i in range(10):
-	st = "hello world"
-	' '.join(format(ord(x), 'b') for x in st)
-
-
-
-	sock.sendto(str(i), (UDP_IP, UDP_PORT))
-
-#sock.sendto(MESSAGE, (UDP_IP, UDP_PORT))
-
-'''
 
