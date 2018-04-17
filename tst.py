@@ -14,7 +14,8 @@ s2 = bits2string(b)
     #print x
 
 #print b
-g = ['01100010']
+g = ['01100001']
 g += ['01100010']
 
+#print ''.join([chr(int(x, 2)) for x in g])
 print ''.join([chr(int(x, 2)) for x in g])
