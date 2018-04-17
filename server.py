@@ -12,7 +12,7 @@ sock = socket.socket(socket.AF_INET, # Internet
                       socket.SOCK_DGRAM) # UDP
 sock.bind((UDP_IP, UDP_PORT))
  
-print '\n'
+#print '\n'
 data = True
 timestamp_array = []
 while data:
@@ -21,11 +21,10 @@ while data:
 
 
   milli_sec = int(round(time.time() * 1000))
-  milli_sec_10_digits = str(milli_sec)[:10]
+  milli_sec_10_digits = str(milli_sec)[:12]
   timestamp_array.append(milli_sec_10_digits)
 
-  #print('timestamp: '+milli_sec_10_digits+'\n')
-
+  print('timestamp: '+milli_sec_10_digits+'\n')
 
   if (len(timestamp_array) >2 and 
     (timestamp_array[-1] == timestamp_array[-2] == timestamp_array[-3])):
@@ -35,12 +34,30 @@ while data:
     break
 
 
-
-msg_array = []
+allBinary = ''
 for i in range(0,len(timestamp_array),2):
   if (timestamp_array[i] == timestamp_array[i+1]):
-    #msg_array.append(0)
-    print 0
+    allBinary += '0'
   else:
-    #msg_array.append(1)
-    print 1
+    allBinary += '1'
+
+print allBinary
+
+for i in range(0,len(allBinary),8):
+  print(allBinary[i:i+8])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -25,7 +25,8 @@ for i in MESSAGE2:
 			sock.sendto(MESSAGE, (UDP_IP, UDP_PORT))
 			time.sleep(1)
 			sock.sendto(MESSAGE3, (UDP_IP, UDP_PORT))
-		time.sleep(3)
+		time.sleep(0.1)
+	time.sleep(3)
 
 sock.sendto('p1_end', (UDP_IP, UDP_PORT))
 sock.sendto('p2_end', (UDP_IP, UDP_PORT))
