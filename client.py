@@ -17,7 +17,7 @@ def press_enter(event):
 
 	real_msg = inputs.get()
 
-	#message.insert(INSERT, '%s\n' % get_inputs)
+	message.insert(INSERT, '%s\n' % real_msg)
 	client.set('')
 	return "break"
 
@@ -29,9 +29,6 @@ frame.pack
 window.mainloop()
 
 
-
-
-
 #UDP_IP = "10.18.99.162"
 UDP_IP = "127.0.0.1"
 
@@ -40,7 +37,7 @@ UDP_PORT = 5005
 msg_packet1 = "packet 1"
 msg_packet2 = "packet 2"
 
-print 'real_msg: '+real_msg 
+#print 'real_msg: '+real_msg 
 for i in real_msg:
 	my7bits = ' '.join(format(ord(x), 'b') for x in i) #changed my8bits to my7bits; ascii characters only have 7 bits, NOT 8
 	#see this ascii table to view # of bits for each char https://upload.wikimedia.org/wikipedia/commons/d/dd/ASCII-Table.svg

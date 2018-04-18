@@ -52,13 +52,11 @@ def mySocket(real_msg):
 	sock.sendto('p3_end', (UDP_IP, UDP_PORT))
 
 
-
-
-
 def press_enter(event):
 	real_msg = inputs.get()
-	mySocket(real_msg)
+	message.insert(INSERT, '%s\n' % real_msg)
 	client.set('')
+	mySocket(real_msg)
 	return "break"
 
 frame = Frame(window)
