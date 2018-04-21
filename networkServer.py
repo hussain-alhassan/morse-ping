@@ -1,9 +1,9 @@
 import socket
 import time
 
-UDP_IP = "10.18.99.162"
+#UDP_IP = "10.18.99.162"
 
-#UDP_IP = "127.0.0.1"
+UDP_IP = "127.0.0.1"
 
 UDP_PORT = 5005
  
@@ -15,7 +15,7 @@ data = True
 timestamp_array = []
 while data:
   data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
-
+  print 'data '+data
   # Gets the timestamp in milli sec
   milli_sec = int(round(time.time() * 1000))
 
@@ -34,10 +34,11 @@ while data:
     timestamp_array.remove(timestamp_array[-3])
     timestamp_array.remove(timestamp_array[-2])
     timestamp_array.remove(timestamp_array[-1])
-    break # Stop revieving packets
+    break # Stop receiving packets
 
 # Stores all binary of the message as (string). It might be very long string
 allBinary = ''
+print 'length '+str(len(timestamp_array))
 for i in range(0,len(timestamp_array),2):
   if (timestamp_array[i] == timestamp_array[i+1]):
     allBinary += '0'
@@ -45,9 +46,11 @@ for i in range(0,len(timestamp_array),2):
     allBinary += '1'
 
 # Takes each 8 bits & stores them in a list (allBinaryList) so it can convert from binary to str.
+print 'line 48 '+allBinary
 allBinaryList = []
-for i in range(0,len(allBinary),8):
-  allBinaryList += [allBinary[i:i+8]]
-
+for i in range(0,len(allBinary),7):
+  print [allBinary[i:i+7]]
+  allBinaryList += [allBinary[i:i+7]]
+print "test"
 # You made it yay. This guy converts from binary to string
 print ''.join([chr(int(x, 2)) for x in allBinaryList])
