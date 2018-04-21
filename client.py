@@ -3,13 +3,18 @@ import socket
 from Tkinter import *
 
 window = Tk()
-
 message = Text(window)
 message.pack()
 
+class ABC(Frame):
+    def __init__(self, master=None):
+        Frame.__init__(self, master)
+        self.pack()
+
+window = ABC(master=window)
+window.master.title("Client")
 client = StringVar()
 inputs = Entry(window, text=client)
-
 inputs.pack(side=BOTTOM, fill=X)
 
 def mySocket(real_msg):
@@ -50,7 +55,6 @@ def mySocket(real_msg):
 	sock.sendto('p1_end', (UDP_IP, UDP_PORT))
 	sock.sendto('p2_end', (UDP_IP, UDP_PORT))
 	sock.sendto('p3_end', (UDP_IP, UDP_PORT))
-
 
 def press_enter(event):
 	real_msg = inputs.get()
