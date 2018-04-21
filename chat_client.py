@@ -20,6 +20,7 @@ inputs = Entry(window, text=client)
 
 inputs.pack(side=BOTTOM, fill=X)
 
+
 welcome = "Please enter a message:"
 
 def press_enter(event):
@@ -45,6 +46,11 @@ def press_enter(event):
 	'''
 	print(real_msg)
 	message.insert(INSERT, '%s\n' % real_msg)
+
+def press_enter(event):
+	print 'our msg: '+inputs.get()
+
+
 	client.set('')
 	return "break"
 '''
@@ -60,6 +66,7 @@ def press_enter(event):
 
 frame = Frame(window)
 inputs.bind("<Return>", press_enter)
+
 frame.pack
 
 window.mainloop()	

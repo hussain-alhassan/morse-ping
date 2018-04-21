@@ -25,7 +25,7 @@ while data:
   # Store all the timestamps in an array For comparison.
   timestamp_array.append(milli_sec)
 
-  print('timestamp: '+milli_sec+'\n')
+  #print('timestamp: '+milli_sec+'\n')
 
   # Deletes the last 3 packets from the array/list.
   # [-1] means last item of the list. [-2] 2nd last item ...ect
@@ -34,7 +34,7 @@ while data:
     timestamp_array.remove(timestamp_array[-3])
     timestamp_array.remove(timestamp_array[-2])
     timestamp_array.remove(timestamp_array[-1])
-    break # Stop revieving packets
+    break # Stop receiving packets
 
 # Stores all binary of the message as (string). It might be very long string
 allBinary = ''
@@ -46,8 +46,8 @@ for i in range(0,len(timestamp_array),2):
 
 # Takes each 8 bits & stores them in a list (allBinaryList) so it can convert from binary to str.
 allBinaryList = []
-for i in range(0,len(allBinary),8):
-  allBinaryList += [allBinary[i:i+8]]
+for i in range(0,len(allBinary),7):
+  allBinaryList += [allBinary[i:i+7]]
 
 # You made it yay. This guy converts from binary to string
 print ''.join([chr(int(x, 2)) for x in allBinaryList])
