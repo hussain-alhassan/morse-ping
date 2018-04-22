@@ -24,16 +24,21 @@ inputs = Entry(window, text=myServer)
 
 frame = Frame(window)
 frame.pack
-
-def mySocket():
-    sock = socket.socket(socket.AF_INET,  # Internet
+sock = socket.socket(socket.AF_INET,  # Internet
                          socket.SOCK_DGRAM)  # UDP
-    sock.bind((UDP_IP, UDP_PORT))
+sock.bind((UDP_IP, UDP_PORT))
+def mySocket():
+    myData = ''
     while(1):
         data = True
         timestamp_array = []
         while data:
-            data, addr = sock.recvfrom(1024)  # buffer size is 1024 bytes
+            if (myData):
+                data = myData
+                print 'emptying myData'
+                myData = ''
+            else:
+                data, addr = sock.recvfrom(1024)  # buffer size is 1024 bytes
             print 'data ' + data
             # Gets the timestamp in milli sec
             milli_sec = int(round(time.time() * 1000))
@@ -55,7 +60,7 @@ def mySocket():
                 timestamp_array.remove(timestamp_array[-1])
                 break  # Stop receiving packets
 
-    # Stores all binary of the message as (string). It might be very long string
+        # Stores all binary of the message as (string). It might be very long string
         allBinary = ''
         print 'length ' + str(len(timestamp_array))
         for i in range(0, len(timestamp_array), 2):
@@ -71,13 +76,18 @@ def mySocket():
             print [allBinary[i:i + 7]]
             allBinaryList += [allBinary[i:i + 7]]
         # You made it. yay. This guy converts from binary to string
+        print 'END OF MESSAGE'
         print ''.join([chr(int(x, 2)) for x in allBinaryList])
         return ''.join([chr(int(x, 2)) for x in allBinaryList])
-
+        myData = sock.recvfrom(1024)  # buffer size is 1024 bytes
 print 'Note: Move the client window & server window will come after you enter the message'
 
 real_msg = mySocket()
 message.insert(INSERT, '%s\n' % real_msg)
 myServer.set('')
-
+data, addr = sock.recvfrom(1024)  # buffer size is 1024 bytes
+if data:
+    real_msg = mySocket()
+    message.insert(INSERT, '%s\n' % real_msg)
+    myServer.set('')
 window.mainloop()
