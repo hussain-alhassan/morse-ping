@@ -16,7 +16,7 @@ class ABC(Frame):
         Frame.__init__(self, master)
         self.pack()
 
-window = ABC(master=window)
+window = ABC(master=window) 
 window.master.title("Server")
 
 myServer = StringVar()
@@ -29,51 +29,52 @@ def mySocket():
     sock = socket.socket(socket.AF_INET,  # Internet
                          socket.SOCK_DGRAM)  # UDP
     sock.bind((UDP_IP, UDP_PORT))
+    while(1):
+        data = True
+        timestamp_array = []
+        while data:
+            data, addr = sock.recvfrom(1024)  # buffer size is 1024 bytes
+            print 'data ' + data
+            # Gets the timestamp in milli sec
+            milli_sec = int(round(time.time() * 1000))
 
-    data = True
-    timestamp_array = []
-    while data:
-        data, addr = sock.recvfrom(1024)  # buffer size is 1024 bytes
-        print 'data ' + data
-        # Gets the timestamp in milli sec
-        milli_sec = int(round(time.time() * 1000))
+            # (to be more accurate), [:12] means take the 12 of 13 digits of timestamp
+            milli_sec = str(milli_sec)[:12]
 
-        # (to be more accurate), [:12] means take the 12 of 13 digits of timestamp
-        milli_sec = str(milli_sec)[:12]
+            # Store all the timestamps in an array For comparison.
+            timestamp_array.append(milli_sec)
 
-        # Store all the timestamps in an array For comparison.
-        timestamp_array.append(milli_sec)
+            print('timestamp: ' + milli_sec + '\n')
 
-        print('timestamp: ' + milli_sec + '\n')
-
-        # Deletes the last 3 packets from the array/list.
-        # [-1] means last item of the list. [-2] 2nd last item ...ect
-        if (len(timestamp_array) > 2 and
-                (timestamp_array[-1] == timestamp_array[-2] == timestamp_array[-3])):
-            timestamp_array.remove(timestamp_array[-3])
-            timestamp_array.remove(timestamp_array[-2])
-            timestamp_array.remove(timestamp_array[-1])
-            break  # Stop receiving packets
+            # Deletes the last 3 packets from the array/list.
+            # [-1] means last item of the list. [-2] 2nd last item ...ect
+            if (len(timestamp_array) > 2 and
+                    (timestamp_array[-1] == timestamp_array[-2] == timestamp_array[-3])):
+                timestamp_array.remove(timestamp_array[-3])
+                timestamp_array.remove(timestamp_array[-2])
+                timestamp_array.remove(timestamp_array[-1])
+                break  # Stop receiving packets
 
     # Stores all binary of the message as (string). It might be very long string
-    allBinary = ''
-    print 'length ' + str(len(timestamp_array))
-    for i in range(0, len(timestamp_array), 2):
-        if (timestamp_array[i] == timestamp_array[i + 1]):
-            allBinary += '0'
-        else:
-            allBinary += '1'
+        allBinary = ''
+        print 'length ' + str(len(timestamp_array))
+        for i in range(0, len(timestamp_array), 2):
+            if (timestamp_array[i] == timestamp_array[i + 1]):
+                allBinary += '0'
+            else:
+                allBinary += '1'
+        print allBinary
+        # Takes each 8 bits & stores them in a list (allBinaryList) so it can convert from binary to str.
+        allBinaryList = []
+        for i in range(0, len(allBinary), 7):
+            print 'anything'
+            print [allBinary[i:i + 7]]
+            allBinaryList += [allBinary[i:i + 7]]
+        # You made it. yay. This guy converts from binary to string
+        print ''.join([chr(int(x, 2)) for x in allBinaryList])
+        return ''.join([chr(int(x, 2)) for x in allBinaryList])
 
-    # Takes each 8 bits & stores them in a list (allBinaryList) so it can convert from binary to str.
-    allBinaryList = []
-    for i in range(0, len(allBinary), 7):
-        print [allBinary[i:i + 7]]
-        allBinaryList += [allBinary[i:i + 7]]
-    # You made it yay. This guy converts from binary to string
-    print ''.join([chr(int(x, 2)) for x in allBinaryList])
-    return ''.join([chr(int(x, 2)) for x in allBinaryList])
-
-print 'Note: Move the client window & Server window will come after you enter the message'
+print 'Note: Move the client window & server window will come after you enter the message'
 
 real_msg = mySocket()
 message.insert(INSERT, '%s\n' % real_msg)
