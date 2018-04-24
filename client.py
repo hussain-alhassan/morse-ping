@@ -1,6 +1,9 @@
+#requires library python-tk
+
 import time
 import socket
 from Tkinter import *
+import urllib2
 
 window = Tk()
 message = Text(window)
@@ -23,9 +26,6 @@ def mySocket(real_msg):
 
 	UDP_PORT = 5005
 
-	msg_packet1 = "packet 1"
-	msg_packet2 = "packet 2"
-
 	print 'real_msg: '+real_msg 
 	for i in real_msg:
 		my7bits = ' '.join(format(ord(x), 'b') for x in i) #changed my8bits to my7bits; ascii characters only have 7 bits, NOT 8
@@ -38,19 +38,20 @@ def mySocket(real_msg):
 		#my7bits = '010'
 		print my7bits+' ======== '+i # this guy will have 7 bits each time. (i) shows the current letter
 		for bit in my7bits:
+			f = urllib2.urlopen('https://www.random.org/integers/?num=10&min=1&max=6&col=1&base=10&format=plain&rnd=new')
+			msg = str(f.read(4))
 			if bit == '0':
 				sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-				sock.sendto(msg_packet1, (UDP_IP, UDP_PORT))
-				sock.sendto(msg_packet2, (UDP_IP, UDP_PORT))
+				sock.sendto(msg, (UDP_IP, UDP_PORT))
+				sock.sendto(msg, (UDP_IP, UDP_PORT))
 
 			if bit == '1':
 				sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-				sock.sendto(msg_packet1, (UDP_IP, UDP_PORT))
-				time.sleep(0.05)
-				sock.sendto(msg_packet2, (UDP_IP, UDP_PORT))
-			time.sleep(0.01) # End of the first letter. Wait then continue
-		time.sleep(0.1) # End of sending the message
-
+				sock.sendto(msg, (UDP_IP, UDP_PORT))
+				time.sleep(1)
+				sock.sendto(msg, (UDP_IP, UDP_PORT))
+			time.sleep(1) # End of the first letter. Wait then continue
+		time.sleep(1) # End of sending the message
 	# When the msg is done, send 3 packets in a row (Signal means done)
 	sock.sendto('p1_end', (UDP_IP, UDP_PORT))
 	sock.sendto('p2_end', (UDP_IP, UDP_PORT))
