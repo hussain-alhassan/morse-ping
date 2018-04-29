@@ -1,5 +1,3 @@
-#requires library python-tk
-
 import time
 import socket
 from Tkinter import *
@@ -20,12 +18,11 @@ client = StringVar()
 inputs = Entry(window, text=client)
 inputs.pack(side=BOTTOM, fill=X)
 
-#UDP_IP = "10.18.99.162"
 UDP_IP = "127.0.0.1"
 UDP_PORT = 5005
 
 def mySocket(real_msg):
-	print 'real_msg: '+real_msg 
+	print 'Secretly sending: '+real_msg 
 	for i in real_msg:
 		my7bits = ' '.join(format(ord(x), 'b') for x in i) #changed my8bits to my7bits; ascii characters only have 7 bits, NOT 8
 		#see this ascii table to view # of bits for each char https://upload.wikimedia.org/wikipedia/commons/d/dd/ASCII-Table.svg
@@ -38,12 +35,10 @@ def mySocket(real_msg):
 		print my7bits+' ======== '+i # this guy will have 7 bits each time. (i) shows the current letter
 		for bit in my7bits:
 			msg = str(randint(0, 1000000))
-			#print 'msg: '+msg
 			if bit == '0':
 				sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 				sock.sendto(msg, (UDP_IP, UDP_PORT))
 				sock.sendto(msg, (UDP_IP, UDP_PORT))
-
 			if bit == '1':
 				sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 				sock.sendto(msg, (UDP_IP, UDP_PORT))
