@@ -18,6 +18,7 @@ client = StringVar()
 inputs = Entry(window, text=client)
 inputs.pack(side=BOTTOM, fill=X)
 
+#UDP_IP = "10.27.103.201"
 UDP_IP = "127.0.0.1"
 UDP_PORT = 5005
 
@@ -42,10 +43,10 @@ def mySocket(real_msg):
 			if bit == '1':
 				sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 				sock.sendto(msg, (UDP_IP, UDP_PORT))
-				time.sleep(0.1)
+				time.sleep(0.3)
 				sock.sendto(msg, (UDP_IP, UDP_PORT))
-			time.sleep(0.1) # End of the first letter. Wait then continue
-		time.sleep(0.3) # End of sending the message
+			time.sleep(0.3) # End of the first letter. Wait then continue
+		time.sleep(0.5) # End of sending the message
 	# When the msg is done, send 3 packets in a row (Signal means done)
 	sock.sendto('p1_end', (UDP_IP, UDP_PORT))
 	sock.sendto('p2_end', (UDP_IP, UDP_PORT))

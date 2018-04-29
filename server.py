@@ -1,7 +1,7 @@
 import socket
 import time
 
-#UDP_IP = "10.18.99.162"
+#UDP_IP = "10.27.103.201"
 UDP_IP = "127.0.0.1"
 UDP_PORT = 5005
  
